@@ -1,0 +1,25 @@
+{
+    "name" : "booru scroller",
+    "version" : "0.1",
+    "manifest_version" : 2,
+
+    "content_scripts" : [
+        {
+            "matches" : [
+                "http://danbooru.donmai.us/post",
+                "http://danbooru.donmai.us/post/",
+                "http://danbooru.donmai.us/post/index*",
+                "https://yande.re/post",
+                "https://yande.re/post/",
+                "https://yande.re/post?*"
+            ],
+            "js" : [
+                "jquery.js",
+                "content.js"
+            ]
+        }
+    ],
+    "web_accessible_resources" : [
+        "loading.gif"
+    ]
+}
