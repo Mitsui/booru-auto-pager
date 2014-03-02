@@ -6,9 +6,12 @@
     "content_scripts" : [
         {
             "matches" : [
+                "http://danbooru.donmai.us/*",
                 "http://danbooru.donmai.us/post",
                 "http://danbooru.donmai.us/post/",
                 "http://danbooru.donmai.us/post/index*",
+                "http://danbooru.donmai.us/posts",
+                "http://danbooru.donmai.us/pools/*",
                 "https://yande.re/post",
                 "https://yande.re/post/",
                 "https://yande.re/post?*"

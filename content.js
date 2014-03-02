@@ -1,6 +1,7 @@
-var pageNum = 1;
+var pageNum = 1;	//ページ番号
 var baseUrl = location.origin + location.pathname + '?';
 var param = location.search.substring(1, location.search.length);
+
 if( param.length > 0 ){
     var param_array = param.split('&');
     for( n in param_array ){
@@ -28,10 +29,10 @@ $(document).ready(function() {
         if( !$(window).data('loading') ){
             $(window).data('loading', true);
             if( location.host == 'danbooru.donmai.us' ){
-                danbooru();
+                danbooru();	// danbooruメソッド呼び出し
             }
             else if( location.host == 'yande.re' ){
-                yandere();
+                yandere();	// yande.reメソッド呼び出し
             }
         }
     });
@@ -40,15 +41,18 @@ $(document).ready(function() {
     }
 });
 
+//danbooru
 function danbooru(){
-    $('div').each( function(){
-        if( $(this).attr('class') == 'content' ){
-            $(this).find('div').each( function(){
-                if( !$(this).attr('style') 
-                    && !$(this).attr('id') 
-                    && !$(this).attr('class') ){
-                    appendBaseUrl = $(this);
-                    return false;
+	$('section').each( function(){
+		if( $(this).attr('id') == 'content' ){
+			$(this).find('div').each( function(){
+				if( $(this).attr('id') == 'posts'){
+					$(this).find('div').each( function(){
+						if( $(this).attr('class') == 'paginator'){
+						appendBaseUrl = $(this);
+						return false;
+						}
+					});
                 }
             });
         }
@@ -66,8 +70,8 @@ function danbooru(){
                     return false;
                 }
             });
-
-            $(data).find('span').each( function(){
+/*
+            $(data).find('div').each( function(){
                 if( $(this).attr('class') == 'thumb blacklisted' ){
                     this.className = 'thumb';
                     appendBaseUrl.append(this);
@@ -75,12 +79,27 @@ function danbooru(){
                 else if( $(this).attr('class') == 'thumb' ){
                     appendBaseUrl.append(this);
                 }
-            });
+*/
+			$(data).find('section').each( function(){
+			if( $(this).attr('id') == 'content' ){
+				$(this).find('div').each( function(){
+					if( $(this).attr('id') == 'posts'){
+						$(this).children().each( function(){
+							if( $(this).attr('class') != 'paginator' ){
+							//appendBaseUrl.append(this);
+							appendBaseUrl.before(this);
+							}
+						});
+					}
+				});
+			}
+			});
             $(window).data('loading', false);
         }
     });
 }
 
+//yande.re
 function yandere(){
     $('ul').each( function(){
         if( $(this).attr('id') == 'post-list-posts' ){
